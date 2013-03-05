@@ -23,7 +23,7 @@ void setup() {
   quater = (float)(Math.PI*2)/4.0f;
   dist = 1000;
   size(640, 480);
-  steps = width*2;
+  steps = width;
   angle = (float)Math.PI/2 / steps;
   px = 0;
   py = 0;
@@ -69,6 +69,7 @@ void draw() {
     if(hit != -1) {
       rect(segmentX, (height/2)-(segmentHeight/2), 1, segmentHeight);
       print(String.format("lx = %f ly = %f angle = %f hit = %f segmentX = %f\n", lx, ly, angle, hit, segmentX));
+      text(String.format("player gridX = %d player gridY = %d", px / dimention, py / dimention), 10, 10);
     }
   }
 }
