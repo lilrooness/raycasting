@@ -68,7 +68,6 @@ void draw() {
     float segmentX = i*2;
     if(hit != -1) {
       rect(segmentX, (height/2)-(segmentHeight/2), 1, segmentHeight);
-      print(String.format("lx = %f ly = %f angle = %f hit = %f segmentX = %f\n", lx, ly, angle, hit, segmentX));
       text(String.format("player gridX = %d player gridY = %d", px / dimention, py / dimention), 10, 10);
     }
   }
