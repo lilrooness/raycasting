@@ -1,3 +1,5 @@
+//changing calculation of distance to be floating point arithmatic
+
 int[][] map = {{0,0,0,0,0},
                {0,0,0,0,0},
                {0,0,0,0,0}, 
