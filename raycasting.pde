@@ -12,12 +12,14 @@ float dist;
 float angle, pangle;
 float steps;
 int dimention;
-int px, py;
+float px, py;
 float plx, ply;
 float lx, ly;
 int maxHeight;
+color currentColor;
 
 void setup() {
+  setColor(255,255,255);
   maxHeight = 200;
   dimention = 10;
   quater = (float)(Math.PI*2)/4.0f;
@@ -63,12 +65,12 @@ void draw() {
     ly = ly/mag;
     lx *= dist;
     ly *= dist;
-    float hit = rayCast(px/dimention, py/dimention, (int)lx, (int)ly, map);
+    float hit = rayCast(px, py, (int)lx, (int)ly, map);
     int segmentHeight = (int) maxHeight - (int)hit;
     float segmentX = i*2;
     if(hit != -1) {
       rect(segmentX, (height/2)-(segmentHeight/2), 1, segmentHeight);
-      text(String.format("player gridX = %d player gridY = %d", px / dimention, py / dimention), 10, 10);
+      text(String.format("player gridX = %d player gridY = %d", (int)px / dimention, (int)py / dimention), 10, 10);
     }
   }
 }
@@ -77,7 +79,9 @@ float magnitude(float x, float y) {
   return (float)Math.sqrt((x * x) + (y * y));
 }
 
-float rayCast(int x1, int y1, int x2, int y2, int[][] map) {
+float rayCast(float xPos, float yPos, int x2, int y2, int[][] map) {
+  int x1 = (int)xPos/dimention;
+  int y1 = (int)yPos/dimention;
   int xinc = 1;
   int yinc = 1;
 
@@ -94,15 +98,14 @@ float rayCast(int x1, int y1, int x2, int y2, int[][] map) {
   if (dx >= dy) {
     int y = y1;
     int ynum = dx/2;
-
+    
     for (int x = x1; x!= x2; x+=xinc) {
       if(x/dimention > map[1].length-1 || y/dimention > map.length-1 || x < 0 || y < 0) {
         return -1;
       }else if(map[y/dimention][x/dimention] == 1) {
-        return (float)Math.sqrt((x - x1)*(x - x1)+(y - y1)*(y - y1));
+        return (float)Math.sqrt((xPos - x1)*(xPos - x1)+(yPos - y1)*(yPos - y1));
       }
       ynum += dy;
-
       if (yinc > 0) {
         if (ynum >= dx) {
           ynum -= dx;
@@ -124,10 +127,9 @@ float rayCast(int x1, int y1, int x2, int y2, int[][] map) {
       if(x/dimention > map[1].length-1 || y/dimention > map.length-1 || x < 0 || y < 0) {
         return -1;
       }else if(map[y/dimention][x/dimention] == 1) {
-        return (float)Math.sqrt((x - x1)*(x - x1)+(y - y1)*(y - y1));
+        return (float)Math.sqrt((xPos - x1)*(xPos - x1)+(yPos - y1)*(yPos - y1));
       }
       xnum += dx;
-      
       if(xinc > 0) {
         if(xnum >= dy) {
           xnum -= dy;
@@ -145,3 +147,7 @@ float rayCast(int x1, int y1, int x2, int y2, int[][] map) {
   return -1;
 }
 
+void setColor(int r, int b, int g) {
+  fill(r,g,b);
+  stroke(r,g,b);
+}
